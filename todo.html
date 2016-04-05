@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="style.css"/>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/firebase/firebase.js"></script>
+    <script src="bower_components/angularfire/dist/angularfire.min.js"></script>
+    <script src="todo.js"></script>
+    <title></title>
+</head>
+<body ng-app="todoApp">
+
+<div id="todoapp" ng-controller="TodoCtrl">
+    <header>
+        <h1 class="baba">Todos by Angular.js</h1>
+        <input id="new-todo" type="text" ng-model="todoText"  size="30"
+               placeholder="What needs to be done?" ng-keyup="addTodo()"/>
+    </header>
+    <br>
+    <br>
+
+    <section id="main" style="display: block;">
+        <div ng-show="isTodo()">
+            <input id="toggle-all" type="checkbox" ng-model="markAll"
+                   ng-click="toggleMarkAll()"/>
+            <label for="toggle-all">Mark all as complete</label>
+        </div>
+
+        <ul id="todo-list" class="unstyled">
+            <li ng-repeat="todo in todos" ng-dblclick="toggleEditMode()">
+                <div class="view" ng-keyup="editTodo()">
+                    <input type="checkbox" ng-model="todo.done"/>
+                    <span class="done-{{todo.done}}" >{{todo.text}}</span>
+                </div>
+                <input class="edit" type="text" ng-model="todo.text"
+                       ng-keyup="editOnEnter(todo)"/>
+            </li>
+        </ul>
+    </section>
+    <div style="display: block;" id="fot">
+        <div class="todo-count">{{remaining()}} of {{todos.length}} remaining</div>
+        <button id="clear-completed" ng-click="clear()" ng-show="hasDone()">
+            <h1>Clear ::{{(todos.length - remaining())}} {{itemText()}}</h1>
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+</body>
+</html>
